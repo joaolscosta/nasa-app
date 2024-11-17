@@ -1,0 +1,53 @@
+body {
+    font-family: "Arial", sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #1a1a2e;
+    color: #eaeaea;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    text-align: center;
+}
+
+/* ----------------------- CONTAINER -----------------------*/
+h1 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+    color: #f5a623;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+}
+
+h2 {
+    font-size: 1.8rem;
+    margin-top: 15px;
+    color: #ffffff;
+}
+
+p {
+    font-size: 1rem;
+    line-height: 1.6;
+    margin: 10px 20px;
+    color: #d1d1d1;
+    /* padding just in left and right */
+}
+
+/* ----------------------- IMAGE -----------------------*/
+img {
+    max-width: 90%;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+    margin-top: 15px;
+}
+
+/* ----------------------- For possible links -----------------------*/
+a {
+    text-decoration: none;
+    color: #f5a623;
+}
+
+a:hover {
+    color: #ffffff;
+    text-shadow: 0px 0px 5px #f5a623;
+}
