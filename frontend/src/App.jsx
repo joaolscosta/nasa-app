@@ -1,51 +1,59 @@
 import React, { useState, useEffect } from "react";
 
 function App() {
-    // State to store the photo data
-    const [photo, setPhoto] = useState(null);
-    // State to store any errors
-    const [error, setError] = useState(null);
+   const [photo, setPhoto] = useState(null);
+   const [error, setError] = useState(null);
+   const [loading, setLoading] = useState(true);
 
-    // Fetch everytime reload the page
-    useEffect(() => {
-        const fetchAPOD = async () => {
-            try {
-                const apiKey = import.meta.env.VITE_NASA_API_KEY;
-                const response = await fetch(
-                    `https://api.nasa.gov/planetary/apod?api_key=${apiKey}`
-                );
-                if (!response.ok) {
-                    throw new Error("Failed to acess API");
-                }
-                const data = await response.json();
-                setPhoto(data);
-            } catch (err) {
-                setError(err.message);
-            }
-        };
+   const fetchAPOD = async () => {
+      try {
+         setLoading(true);
+         setError(null);
+         const apiKey = import.meta.env.VITE_NASA_API_KEY;
+         const response = await fetch(`https://api.nasa.gov/planetary/apod?api_key=${apiKey}`);
 
-        fetchAPOD();
-    }, []);
+         if (!response.ok) {
+            throw new Error("Erro ao acessar a API");
+         }
 
-    if (error) {
-        return <p>Error: {error}</p>;
-    }
+         const data = await response.json();
+         setPhoto(data);
+      } catch (err) {
+         setError(err.message);
+      } finally {
+         setLoading(false);
+      }
+   };
 
-    if (!photo) {
-        return <p>Loading...</p>;
-    }
+   useEffect(() => {
+      fetchAPOD();
+   }, []);
 
-    return (
-        <>
-            <h1>NASA Astronomy Picture of the Day</h1>
-            <img src={photo.url} alt={photo.title} />
-            <h2>{photo.title}</h2>
-            <p>{photo.explanation}</p>
-            <p>
-                <strong>Date:</strong> {photo.date}
-            </p>
-        </>
-    );
+   return (
+      <div className="container">
+         <h1>NASA Astronomy Picture of the Day</h1>
+
+         {loading && <div className="loader"></div>}
+
+         {error && (
+            <div className="error">
+               <p>❌ {error}</p>
+               <button onClick={fetchAPOD}>Try again</button>
+            </div>
+         )}
+
+         {photo && (
+            <div className="card">
+               <h2>{photo.title}</h2>
+               <img src={photo.url} alt={photo.title} />
+               <p>{photo.explanation}</p>
+               <p>
+                  <strong>📅 Date:</strong> {photo.date}
+               </p>
+            </div>
+         )}
+      </div>
+   );
 }
 
 export default App;
